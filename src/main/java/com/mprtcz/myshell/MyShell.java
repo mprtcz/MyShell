@@ -28,16 +28,24 @@ public class MyShell {
         displayString();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        recognizeCommand(input);
+        parseInput(input);
     }
 
-    private void recognizeCommand(String input) {
-        if (!input.equals("")) {
-            System.out.println(input);
-            String command = input.split(" ")[0];
+    private void parseInput(String input) {
+        String parameter = "";
+        String[] parsedInput = input.split(" ");
+        String command = parsedInput[0];
+        if(parsedInput.length>1) {
+            parameter = input.split(" ")[1];
+        }
+        recognizeCommand(command, parameter);
+    }
+
+    private void recognizeCommand(String command, String parameter) {
+        if (!command.equals("")) {
             switch (command) {
                 case "prompt":
-                    prompt = input.split(" ")[1] + ">";
+                    prompt = parameter + ">";
                     break;
                 case "reset":
                     prompt = "$>";
@@ -52,6 +60,12 @@ public class MyShell {
                 case "dir":
                     displayString(displayCurrentDirectoryContents());
                     break;
+                case "cd":
+                    if(parameter.equals("..")){
+                        selectParentDirectory();
+                    } else {
+                        selectChildDirectory(parameter);
+                    }
                 default:
                     System.out.println("Command not recognized");
                     break;
@@ -72,7 +86,7 @@ public class MyShell {
                 prompt +
                 string;
         System.out.print(toDisplay);
-        recognizeCommand(getNoPromptCommand());
+        parseInput(getNoPromptCommand());
     }
 
     private void displayString() {
@@ -87,12 +101,19 @@ public class MyShell {
         return scanner.nextLine();
     }
 
-    private String displayCurrentDirectoryContents() {
-        ArrayList<File> files = new ArrayList<>(Arrays.asList(currentDirectory.listFiles()));
-        return recognizeFolderContents(files);
+    private ArrayList<File> getFolderContents() {
+        ArrayList<File> files = new ArrayList<>();
+        try {
+            files = new ArrayList<>(Arrays.asList(currentDirectory.listFiles()));
+        }catch (NullPointerException e){
+                e.printStackTrace();
+            }
+        return files;
     }
 
-    String recognizeFolderContents(ArrayList<File> contents){
+    private String displayCurrentDirectoryContents(){
+        ArrayList<File> contents = getFolderContents();
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\n");
 
@@ -105,8 +126,24 @@ public class MyShell {
                 stringBuilder.append("\n");
             }
         }
-
         return stringBuilder.toString();
+    }
+
+    private void selectChildDirectory(String folderName){
+        ArrayList<File> folderContents = getFolderContents();
+        for (File f : folderContents){
+            if(f.getName().equals(folderName)){
+                currentDirectory = f;
+                displayString(getWorkingDirectory());
+                break;
+            }
+        }
+        parseInput("notFound");
+    }
+
+    private void selectParentDirectory(){
+        currentDirectory = currentDirectory.getParentFile();
+        displayString(getWorkingDirectory());
     }
 
 }
