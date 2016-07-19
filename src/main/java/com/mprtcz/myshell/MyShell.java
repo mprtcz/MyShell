@@ -66,8 +66,9 @@ public class MyShell {
                     } else {
                         selectChildDirectory(parameter);
                     }
+                    break;
                 default:
-                    System.out.println("Command not recognized");
+                    System.out.println(command + " : unknown command");
                     break;
             }
         }
@@ -132,13 +133,12 @@ public class MyShell {
     private void selectChildDirectory(String folderName){
         ArrayList<File> folderContents = getFolderContents();
         for (File f : folderContents){
-            if(f.getName().equals(folderName)){
+            if(f.getName().equals(folderName)&&f.isDirectory()){
                 currentDirectory = f;
-                displayString(getWorkingDirectory());
                 break;
             }
         }
-        parseInput("notFound");
+        displayString(getWorkingDirectory());
     }
 
     private void selectParentDirectory(){
