@@ -40,7 +40,9 @@ class Cd implements Command {
     }
 
     private void selectParentDirectory(MyShell myShell) {
-        myShell.setCurrentDirectory(myShell.getCurrentDirectory().getParentFile());
+        if (myShell.getCurrentDirectory().getParentFile() != null) {
+            myShell.setCurrentDirectory(myShell.getCurrentDirectory().getParentFile());
+        }
     }
 
     private ArrayList<File> getFolderContents(MyShell myShell) {
