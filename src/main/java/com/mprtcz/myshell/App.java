@@ -17,7 +17,7 @@ public class App {
         MyShell myShell = new MyShell();
         do {
             Arguments arguments = getInput(myShell);
-            Command command = CommandFactory.getCommand(CommandEnum.fromString(arguments.getCommand()), arguments.getParameter());
+            Command command = CommandFactory.getCommand(CommandEnum.fromString(arguments.getCommand()), arguments);
             command.execute(myShell);
         } while (myShell.isRunning());
 

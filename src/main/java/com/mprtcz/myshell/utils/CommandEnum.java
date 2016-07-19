@@ -21,10 +21,6 @@ public enum CommandEnum {
         return commandString;
     }
 
-    public void setCommandString(String commandString) {
-        this.commandString = commandString;
-    }
-
     public static CommandEnum fromString(String text) {
         if (text != null) {
             for (CommandEnum commandEnum : CommandEnum.values()) {
@@ -33,7 +29,6 @@ public enum CommandEnum {
                 }
             }
         }
-        UNKNOWN.setCommandString(text);
         return UNKNOWN;
     }
 }

@@ -1,7 +1,6 @@
 package com.mprtcz.myshell.commands;
 
 import com.mprtcz.myshell.utils.MyShell;
-import com.mprtcz.myshell.utils.CommandEnum;
 
 /**
  * Created by Azet on 2016-07-20.
@@ -9,8 +8,8 @@ import com.mprtcz.myshell.utils.CommandEnum;
 class UnknownCommand implements Command {
     private String commandString;
 
-    UnknownCommand(CommandEnum commandEnum) {
-        commandString = commandEnum.getCommandString();
+    UnknownCommand(String commandString) {
+        this.commandString = commandString;
     }
 
     @Override
