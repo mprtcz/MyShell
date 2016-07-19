@@ -1,26 +1,25 @@
 package com.mprtcz.myshell.commands;
 
 import com.mprtcz.myshell.utils.Arguments;
-import com.mprtcz.myshell.utils.CommandEnum;
 
 /**
  * Created by Azet on 2016-07-19.
  */
 public class CommandFactory {
-    public static Command getCommand(CommandEnum commandEnum, Arguments arguments) {
+    public static Command getCommand(Arguments arguments) {
         Command command = null;
 
-        if (commandEnum == CommandEnum.CD) {
+        if (arguments.getCommand().equals("cd")) {
             command = new Cd(arguments.getParameter());
-        } else if (commandEnum == CommandEnum.PROMPT) {
+        } else if (arguments.getCommand().equals("prompt")) {
             command = new Prompt(arguments.getParameter());
-        } else if (commandEnum == CommandEnum.DIR) {
+        } else if (arguments.getCommand().equals("dir")) {
             command = new Dir();
-        } else if (commandEnum == CommandEnum.EXIT) {
+        } else if (arguments.getCommand().equals("exit")) {
             command = new Exit();
-        } else if (commandEnum == CommandEnum.TREE) {
+        } else if (arguments.getCommand().equals("tree")) {
             command = new Tree();
-        } else if (commandEnum == CommandEnum.UNKNOWN) {
+        } else {
             command = new UnknownCommand(arguments.getCommand());
         }
         return command;

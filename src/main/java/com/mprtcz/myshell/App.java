@@ -2,9 +2,8 @@ package com.mprtcz.myshell;
 
 import com.mprtcz.myshell.commands.Command;
 import com.mprtcz.myshell.commands.CommandFactory;
-import com.mprtcz.myshell.utils.MyShell;
 import com.mprtcz.myshell.utils.Arguments;
-import com.mprtcz.myshell.utils.CommandEnum;
+import com.mprtcz.myshell.utils.MyShell;
 
 import java.util.Scanner;
 
@@ -17,7 +16,7 @@ public class App {
         MyShell myShell = new MyShell();
         do {
             Arguments arguments = getInput(myShell);
-            Command command = CommandFactory.getCommand(CommandEnum.fromString(arguments.getCommand()), arguments);
+            Command command = CommandFactory.getCommand(arguments);
             command.execute(myShell);
         } while (myShell.isRunning());
 
