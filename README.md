@@ -5,14 +5,18 @@ Available commands:
 
 `prompt [value]` - changes presented prompt to given value
 
-`$cwd` - displays a path to current working directory
+Possible values of a `prompt` parameter:
+
+`$cwd` - displays a path to current working directory in a prompt
 
 `reset` - resets a prompt to default value
 
-`dir` - presents contents of working direcotry
+Other commands:
 
-`exit` - exits the shell
+`dir` - presents contents of working directory
 
 `cd [subfolder name]` - navigates to selected subdirectory of the current directory
 
 `cd ..` - navigates to parent directory of the current directory
+
+`exit` - exits the shell
