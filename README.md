@@ -11,6 +11,8 @@ Possible values of a `prompt` parameter:
 
 `reset` - resets a prompt to default value
 
+`[user's value]` - displays a user defined prompt
+
 Other commands:
 
 `dir` - presents contents of working directory
