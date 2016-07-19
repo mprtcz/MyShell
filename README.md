@@ -12,3 +12,7 @@ Available commands:
 `dir` - presents contents of working direcotry
 
 `exit` - exits the shell
+
+`cd [subfolder name]` - navigates to selected subdirectory of the current directory
+
+`cd ..` - navigates to parent directory of the current directory
