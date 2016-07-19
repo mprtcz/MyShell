@@ -57,6 +57,9 @@ public class MyShell {
                     case "dir":
                         System.out.println(displayCurrentDirectoryContents());
                         break;
+                    case "tree":
+                        getStringTree();
+                        break;
                     default:
                         System.out.println(command + " : unknown command");
                         break;
@@ -155,4 +158,21 @@ public class MyShell {
         currentDirectory = currentDirectory.getParentFile();
     }
 
+    private void generateFoldersTree(File file, StringBuilder prefix){
+        ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
+        for(File f :files){
+            if(f.isDirectory()){
+                System.out.println(prefix + f.getName());
+                prefix.append("-");
+                generateFoldersTree(f,prefix);
+                prefix.delete(prefix.length()-1, prefix.length());
+            }
+        }
+    }
+
+    private void getStringTree(){
+        StringBuilder stringBuilder = new StringBuilder();
+        generateFoldersTree(currentDirectory, new StringBuilder(""));
+        System.out.println(stringBuilder.toString());
+    }
 }
