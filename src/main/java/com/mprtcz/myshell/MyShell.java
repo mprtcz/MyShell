@@ -130,10 +130,10 @@ public class MyShell {
 
         for (File f : contents) {
             if (f.isDirectory()) {
-                stringBuilder.append("DIR " + f.getName());
+                stringBuilder.append("DIR\t\t" + f.getName());
                 stringBuilder.append("\n");
             } else {
-                stringBuilder.append("FILE " + f.getName());
+                stringBuilder.append("FILE\t" + f.getName());
                 stringBuilder.append("\n");
             }
         }
