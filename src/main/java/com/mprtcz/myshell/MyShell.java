@@ -55,7 +55,7 @@ public class MyShell {
                         System.out.println("bye");
                         break;
                     case "dir":
-                        displayString(displayCurrentDirectoryContents());
+                        System.out.println(displayCurrentDirectoryContents());
                         break;
                     default:
                         System.out.println(command + " : unknown command");
@@ -73,7 +73,7 @@ public class MyShell {
     }
 
     void getCommand() {
-        displayString();
+        displayFullPrompt();
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         parseInput(input);
@@ -97,14 +97,14 @@ public class MyShell {
         return currentDirectory.getAbsolutePath();
     }
 
-    private void displayString(String string) {
+    private void displayStringWithFullPrompt(String string) {
         String toDisplay = "[MyShell] " +
                 getPrompt() +
                 string;
         System.out.print(toDisplay);
     }
 
-    private void displayString() {
+    private void displayFullPrompt() {
         String toDisplay = "[MyShell] " +
                 getPrompt();
         System.out.print(toDisplay);
@@ -125,6 +125,8 @@ public class MyShell {
         ArrayList<File> contents = getFolderContents();
 
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Contents of ");
+        stringBuilder.append(currentDirectory.getAbsolutePath());
         stringBuilder.append("\n");
 
         for (File f : contents) {
