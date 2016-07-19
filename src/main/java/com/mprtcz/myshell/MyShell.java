@@ -17,6 +17,55 @@ public class MyShell {
         currentDirectory = new File(getWorkingDirectory());
     }
 
+    private String getPrompt() {
+        System.out.println(prompt);
+        if (prompt.equals("$cwd>")) {
+            return getWorkingDirectory() + ">";
+        } else {
+            return prompt;
+        }
+    }
+
+    private void recognizeCommand(String command, String parameter) {
+        if (!command.equals("")) {
+            if (command.equals("prompt")) {
+                switch (parameter) {
+                    case "$cwd":
+                        prompt = "$cwd>";
+                        break;
+                    case "reset":
+                        prompt = "$>";
+                        break;
+                    default:
+                        prompt = parameter + ">";
+                        break;
+                }
+            } else if (command.equals("cd")) {
+                switch (parameter) {
+                    case (".."):
+                        selectParentDirectory();
+                        break;
+                    default:
+                        selectChildDirectory(parameter);
+                        break;
+                }
+            } else {
+                switch (command) {
+                    case "exit":
+                        running = false;
+                        System.out.println("bye");
+                        break;
+                    case "dir":
+                        displayString(displayCurrentDirectoryContents());
+                        break;
+                    default:
+                        System.out.println(command + " : unknown command");
+                        break;
+                }
+            }
+        }
+    }
+
     String getDirectories(File filepath) {
         File file = new File("/");
         String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
@@ -33,45 +82,12 @@ public class MyShell {
 
     private void parseInput(String input) {
         String parameter = "";
-        String[] parsedInput = input.split(" ");
+        String[] parsedInput = input.split(" ", 2);
         String command = parsedInput[0];
-        if(parsedInput.length>1) {
-            parameter = input.split(" ")[1];
+        if (parsedInput.length > 1) {
+            parameter = parsedInput[1];
         }
         recognizeCommand(command, parameter);
-    }
-
-    private void recognizeCommand(String command, String parameter) {
-        if (!command.equals("")) {
-            switch (command) {
-                case "prompt":
-                    prompt = parameter + ">";
-                    break;
-                case "reset":
-                    prompt = "$>";
-                    break;
-                case "exit":
-                    running = false;
-                    System.out.println("bye");
-                    break;
-                case "$cwd":
-                    displayString(getWorkingDirectory());
-                    break;
-                case "dir":
-                    displayString(displayCurrentDirectoryContents());
-                    break;
-                case "cd":
-                    if(parameter.equals("..")){
-                        selectParentDirectory();
-                    } else {
-                        selectChildDirectory(parameter);
-                    }
-                    break;
-                default:
-                    System.out.println(command + " : unknown command");
-                    break;
-            }
-        }
     }
 
     boolean isRunning() {
@@ -84,66 +100,58 @@ public class MyShell {
 
     private void displayString(String string) {
         String toDisplay = "[MyShell] " +
-                prompt +
+                getPrompt() +
                 string;
         System.out.print(toDisplay);
-        parseInput(getNoPromptCommand());
     }
 
     private void displayString() {
         String toDisplay = "[MyShell] " +
-                prompt;
+                getPrompt();
         System.out.print(toDisplay);
     }
 
-    private String getNoPromptCommand() {
-        System.out.print(">");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
 
     private ArrayList<File> getFolderContents() {
         ArrayList<File> files = new ArrayList<>();
         try {
             files = new ArrayList<>(Arrays.asList(currentDirectory.listFiles()));
-        }catch (NullPointerException e){
-                e.printStackTrace();
-            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         return files;
     }
 
-    private String displayCurrentDirectoryContents(){
+    private String displayCurrentDirectoryContents() {
         ArrayList<File> contents = getFolderContents();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\n");
 
-        for(File f : contents){
-            if(f.isDirectory()){
-                stringBuilder.append("DIR " +f.getName());
+        for (File f : contents) {
+            if (f.isDirectory()) {
+                stringBuilder.append("DIR " + f.getName());
                 stringBuilder.append("\n");
             } else {
-                stringBuilder.append("FILE " +f.getName());
+                stringBuilder.append("FILE " + f.getName());
                 stringBuilder.append("\n");
             }
         }
         return stringBuilder.toString();
     }
 
-    private void selectChildDirectory(String folderName){
+    private void selectChildDirectory(String folderName) {
         ArrayList<File> folderContents = getFolderContents();
-        for (File f : folderContents){
-            if(f.getName().equals(folderName)&&f.isDirectory()){
+        for (File f : folderContents) {
+            if (f.getName().equals(folderName) && f.isDirectory()) {
                 currentDirectory = f;
                 break;
             }
         }
-        displayString(getWorkingDirectory());
     }
 
-    private void selectParentDirectory(){
+    private void selectParentDirectory() {
         currentDirectory = currentDirectory.getParentFile();
-        displayString(getWorkingDirectory());
     }
 
 }
