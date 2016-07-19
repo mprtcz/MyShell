@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Created by Azet on 2016-07-19.
  */
 public class MyShell {
-    private String prompt = "$>";
+    private String prompt = "$";
     private boolean running = true;
     private File currentDirectory = new File("");
 
@@ -18,11 +18,10 @@ public class MyShell {
     }
 
     private String getPrompt() {
-        System.out.println(prompt);
-        if (prompt.equals("$cwd>")) {
+        if (prompt.equals("$cwd")) {
             return getWorkingDirectory() + ">";
         } else {
-            return prompt;
+            return prompt + ">";
         }
     }
 
@@ -31,13 +30,13 @@ public class MyShell {
             if (command.equals("prompt")) {
                 switch (parameter) {
                     case "$cwd":
-                        prompt = "$cwd>";
+                        prompt = "$cwd";
                         break;
                     case "reset":
-                        prompt = "$>";
+                        prompt = "$";
                         break;
                     default:
-                        prompt = parameter + ">";
+                        prompt = parameter;
                         break;
                 }
             } else if (command.equals("cd")) {
