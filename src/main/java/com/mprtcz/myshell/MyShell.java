@@ -44,6 +44,7 @@ public class MyShell {
                     break;
                 case "exit":
                     running = false;
+                    System.out.println("bye");
                     break;
                 case "$cwd":
                     displayString(getWorkingDirectory());
