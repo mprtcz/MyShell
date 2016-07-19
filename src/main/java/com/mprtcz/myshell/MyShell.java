@@ -148,8 +148,8 @@ public class MyShell {
         ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
         for (File f : files) {
             if (f.isDirectory()) {
-                System.out.println(prefix + f.getName());
                 prefix.append("-");
+                System.out.println(prefix + f.getName());
                 generateFoldersTree(f, prefix);
                 prefix.delete(prefix.length() - 1, prefix.length());
             }
@@ -157,6 +157,7 @@ public class MyShell {
     }
 
     private void getStringTree() {
+        System.out.println(currentDirectory.getName());
         generateFoldersTree(currentDirectory, new StringBuilder(""));
     }
 }
