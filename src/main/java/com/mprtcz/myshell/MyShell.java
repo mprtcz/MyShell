@@ -68,13 +68,6 @@ public class MyShell {
         }
     }
 
-    String getDirectories(File filepath) {
-        File file = new File("/");
-        String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
-        System.out.println(Arrays.toString(directories));
-        return null;
-    }
-
     void getCommand() {
         displayFullPrompt();
         Scanner scanner = new Scanner(System.in);
@@ -98,13 +91,6 @@ public class MyShell {
 
     private String getWorkingDirectory() {
         return currentDirectory.getAbsolutePath();
-    }
-
-    private void displayStringWithFullPrompt(String string) {
-        String toDisplay = "[MyShell] " +
-                getPrompt() +
-                string;
-        System.out.print(toDisplay);
     }
 
     private void displayFullPrompt() {
@@ -158,21 +144,19 @@ public class MyShell {
         currentDirectory = currentDirectory.getParentFile();
     }
 
-    private void generateFoldersTree(File file, StringBuilder prefix){
+    private void generateFoldersTree(File file, StringBuilder prefix) {
         ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
-        for(File f :files){
-            if(f.isDirectory()){
+        for (File f : files) {
+            if (f.isDirectory()) {
                 System.out.println(prefix + f.getName());
                 prefix.append("-");
-                generateFoldersTree(f,prefix);
-                prefix.delete(prefix.length()-1, prefix.length());
+                generateFoldersTree(f, prefix);
+                prefix.delete(prefix.length() - 1, prefix.length());
             }
         }
     }
 
-    private void getStringTree(){
-        StringBuilder stringBuilder = new StringBuilder();
+    private void getStringTree() {
         generateFoldersTree(currentDirectory, new StringBuilder(""));
-        System.out.println(stringBuilder.toString());
     }
 }
