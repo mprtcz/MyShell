@@ -21,4 +21,6 @@ Other commands:
 
 `cd ..` - navigates to parent directory of the current directory
 
+`tree` - displays a current working directory tree along with all of it's subdirectories
+
 `exit` - exits the shell
