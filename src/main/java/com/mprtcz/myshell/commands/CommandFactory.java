@@ -12,6 +12,7 @@ public class CommandFactory {
     private static final String EXIT = "exit";
     private static final String TREE = "tree";
 
+    private CommandFactory() {}
 
     public static Command getCommand(Arguments arguments) {
         Command command = null;
