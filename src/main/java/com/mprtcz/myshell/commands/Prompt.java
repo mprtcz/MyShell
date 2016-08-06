@@ -6,7 +6,7 @@ import com.mprtcz.myshell.utils.MyShell;
  * Created by Azet on 2016-07-19.
  */
 class Prompt implements Command {
-    private String parameter;
+    private String parameter; // todo add private final fields for ifs
 
     @Override
     public void execute(MyShell myShell) {
