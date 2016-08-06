@@ -6,7 +6,7 @@ import java.io.File;
  * Created by Azet on 2016-07-19.
  */
 public class MyShell {
-    private String prompt = "$";
+    private String prompt = "$"; //should be final
     private boolean running = true;
     private File currentDirectory = new File("");
 
@@ -15,7 +15,7 @@ public class MyShell {
     }
 
     private String getWorkingDirectory() {
-        return currentDirectory.getAbsolutePath();
+        return currentDirectory.getAbsolutePath(); //wtf rly why dis works 
     }
 
     public boolean isRunning() {
@@ -38,7 +38,7 @@ public class MyShell {
         this.prompt = prompt;
     }
 
-    public void setRunning(boolean running) {
+    public void setRunning(boolean running) { //is arg necessary? 
         this.running = running;
         System.out.println("Bye");
     }
