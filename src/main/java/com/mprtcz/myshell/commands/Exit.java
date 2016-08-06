@@ -8,6 +8,6 @@ import com.mprtcz.myshell.utils.MyShell;
 class Exit implements Command {
     @Override
     public void execute(MyShell myShell) {
-        myShell.setRunning(false);
+        myShell.exitShell();
     }
 }

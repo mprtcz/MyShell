@@ -16,14 +16,21 @@ class Tree implements Command {
     }
 
     private void generateFoldersTree(File file, StringBuilder prefix) {
-        ArrayList<File> files = new ArrayList<>(Arrays.asList(file.listFiles()));
-        for (File f : files) {
-            if (f.isDirectory()) {
+        File[] filesArray = null;
+        try{
+            filesArray = file.listFiles();
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+        }
+
+        if(filesArray!=null) {
+            ArrayList<File> files = new ArrayList<>(Arrays.asList(filesArray));
+            files.stream().filter(File::isDirectory).forEach(f -> {
                 prefix.append("-");
                 System.out.println(prefix + f.getName());
                 generateFoldersTree(f, prefix);
                 prefix.delete(prefix.length() - 1, prefix.length());
-            }
+            });
         }
     }
 

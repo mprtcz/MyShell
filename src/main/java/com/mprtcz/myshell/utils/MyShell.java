@@ -6,7 +6,7 @@ import java.io.File;
  * Created by Azet on 2016-07-19.
  */
 public class MyShell {
-    private String prompt = "$"; //should be final
+    private String prompt = "$"; 
     private boolean running = true;
     private File currentDirectory = new File("");
 
@@ -38,8 +38,8 @@ public class MyShell {
         this.prompt = prompt;
     }
 
-    public void setRunning(boolean running) { //is arg necessary? 
-        this.running = running;
+    public void exitShell() {
+        this.running = false;
         System.out.println("Bye");
     }
 
