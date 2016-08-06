@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * Created by Azet on 2016-07-20.
  */
-public class Dir implements Command {
+class Dir implements Command {
     @Override
     public void execute(MyShell myShell) {
         System.out.println(displayCurrentDirectoryContents(myShell));
@@ -19,17 +19,19 @@ public class Dir implements Command {
         ArrayList<File> contents = getFolderContents(myShell);
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Contents of ");
-        stringBuilder.append(myShell.getCurrentDirectory().getAbsolutePath());
-        stringBuilder.append("\n");
+        stringBuilder.append("Contents of ")
+                .append(myShell.getCurrentDirectory().getAbsolutePath())
+                .append("\n");
 
         for (File f : contents) {
             if (f.isDirectory()) {
-                stringBuilder.append("DIR\t\t" + f.getName());
-                stringBuilder.append("\n");
+                stringBuilder.append("DIR\t\t")
+                        .append(f.getName())
+                        .append("\n");
             } else {
-                stringBuilder.append("FILE\t" + f.getName());
-                stringBuilder.append("\n");
+                stringBuilder.append("FILE\t")
+                        .append(f.getName())
+                        .append("\n");
             }
         }
         return stringBuilder.toString();
@@ -37,10 +39,15 @@ public class Dir implements Command {
 
     private ArrayList<File> getFolderContents(MyShell myShell) {
         ArrayList<File> files = new ArrayList<>();
+        File[] filesArray = null;
+
         try {
-            files = new ArrayList<>(Arrays.asList(myShell.getCurrentDirectory().listFiles()));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+            filesArray = myShell.getCurrentDirectory().listFiles();
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
+        }
+        if (filesArray != null) {
+            files = new ArrayList<>(Arrays.asList(filesArray));
         }
         return files;
     }

@@ -8,14 +8,14 @@ import java.io.File;
 public class MyShell {
     private String prompt = "$"; 
     private boolean running = true;
-    private File currentDirectory = new File("");
+    private File currentDirectory;
 
     public MyShell() {
-        currentDirectory = new File(getWorkingDirectory());
+        currentDirectory = new File(new File("").getAbsolutePath());
     }
 
     private String getWorkingDirectory() {
-        return currentDirectory.getAbsolutePath(); //wtf rly why dis works 
+        return currentDirectory.getAbsolutePath();
     }
 
     public boolean isRunning() {
@@ -31,7 +31,11 @@ public class MyShell {
     }
 
     public File getCurrentDirectory() {
-        return currentDirectory;
+        if(currentDirectory!=null) {
+            return currentDirectory;
+        } else {
+            return new File("");
+        }
     }
 
     public void setPrompt(String prompt) {

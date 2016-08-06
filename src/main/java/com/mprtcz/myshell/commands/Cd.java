@@ -47,10 +47,16 @@ class Cd implements Command {
 
     private ArrayList<File> getFolderContents(MyShell myShell) {
         ArrayList<File> files = new ArrayList<>();
+        File[] filesArray = null;
+
         try {
-            files = new ArrayList<>(Arrays.asList(myShell.getCurrentDirectory().listFiles()));
+            filesArray = myShell.getCurrentDirectory().listFiles();
         } catch (NullPointerException e) {
             e.printStackTrace();
+        }
+
+        if(filesArray!=null) {
+            files = new ArrayList<>(Arrays.asList(filesArray));
         }
         return files;
     }
