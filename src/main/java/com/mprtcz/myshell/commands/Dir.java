@@ -23,16 +23,27 @@ class Dir implements Command {
                 .append("\n");
 
         for (File f : contents) {
-            if (f.isDirectory()) {
-                stringBuilder.append("DIR\t\t")
-                        .append(f.getName())
-                        .append("\n");
-            } else {
-                stringBuilder.append("FILE\t")
-                        .append(f.getName())
-                        .append("\n");
-            }
+            appendContentLine(stringBuilder, f);
         }
         return stringBuilder.toString();
+    }
+
+    private void appendContentLine(StringBuilder stringBuilder, File file) {
+        stringBuilder.append(ContentType.selectType(file))
+                .append(file.getName())
+                .append("\n");
+    }
+
+    enum ContentType {
+        DIR,
+        FILE;
+
+        static String selectType(File file) {
+            if (file.isDirectory()) {
+                return DIR + "\t\t";
+            } else {
+                return FILE + "\t";
+            }
+        }
     }
 }

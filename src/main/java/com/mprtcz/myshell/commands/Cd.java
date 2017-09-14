@@ -4,7 +4,7 @@ import com.mprtcz.myshell.utils.MyShell;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /**
  * Created by Azet on 2016-07-19.
@@ -31,15 +31,15 @@ class Cd implements Command {
 
     private void selectChildDirectory(MyShell myShell, String folderName) {
         List<File> folderContents = getFolderContents(myShell);
-        if (!folderContents.stream().map(File::getName).collect(Collectors.toList()).contains(folderName)) {
-            System.out.println("No such file or directory");
-            return;
-        }
-        for (File f : folderContents) {
-            if (f.getName().equals(folderName) && f.isDirectory()) {
-                myShell.setCurrentDirectory(f);
-                break;
+        Optional<File> folder = folderContents.stream().filter(file -> file.getName().equals(folderName)).findFirst();
+        if (folder.isPresent()) {
+            if (!folder.get().isDirectory()) {
+                System.out.println("Not a directory!");
+            } else {
+                myShell.setCurrentDirectory(folder.get());
             }
+        } else {
+            System.out.println("No such file or directory");
         }
     }
 
