@@ -17,13 +17,13 @@ class Tree implements Command {
 
     private void generateFoldersTree(File file, StringBuilder prefix) {
         File[] filesArray = null;
-        try{
+        try {
             filesArray = file.listFiles();
-        } catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             npe.printStackTrace();
         }
 
-        if(filesArray!=null) {
+        if (filesArray != null) {
             ArrayList<File> files = new ArrayList<>(Arrays.asList(filesArray));
             files.stream().filter(File::isDirectory).forEach(f -> {
                 prefix.append("-");

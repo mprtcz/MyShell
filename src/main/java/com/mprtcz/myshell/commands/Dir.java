@@ -3,8 +3,7 @@ package com.mprtcz.myshell.commands;
 import com.mprtcz.myshell.utils.MyShell;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Azet on 2016-07-20.
@@ -16,7 +15,7 @@ class Dir implements Command {
     }
 
     private String displayCurrentDirectoryContents(MyShell myShell) {
-        ArrayList<File> contents = getFolderContents(myShell);
+        List<File> contents = getFolderContents(myShell);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Contents of ")
@@ -35,20 +34,5 @@ class Dir implements Command {
             }
         }
         return stringBuilder.toString();
-    }
-
-    private ArrayList<File> getFolderContents(MyShell myShell) {
-        ArrayList<File> files = new ArrayList<>();
-        File[] filesArray = null;
-
-        try {
-            filesArray = myShell.getCurrentDirectory().listFiles();
-        } catch (NullPointerException npe) {
-            npe.printStackTrace();
-        }
-        if (filesArray != null) {
-            files = new ArrayList<>(Arrays.asList(filesArray));
-        }
-        return files;
     }
 }

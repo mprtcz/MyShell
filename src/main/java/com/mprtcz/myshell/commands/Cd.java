@@ -3,8 +3,8 @@ package com.mprtcz.myshell.commands;
 import com.mprtcz.myshell.utils.MyShell;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Azet on 2016-07-19.
@@ -30,7 +30,11 @@ class Cd implements Command {
 
 
     private void selectChildDirectory(MyShell myShell, String folderName) {
-        ArrayList<File> folderContents = getFolderContents(myShell);
+        List<File> folderContents = getFolderContents(myShell);
+        if (!folderContents.stream().map(File::getName).collect(Collectors.toList()).contains(folderName)) {
+            System.out.println("No such file or directory");
+            return;
+        }
         for (File f : folderContents) {
             if (f.getName().equals(folderName) && f.isDirectory()) {
                 myShell.setCurrentDirectory(f);
@@ -43,21 +47,5 @@ class Cd implements Command {
         if (myShell.getCurrentDirectory().getParentFile() != null) {
             myShell.setCurrentDirectory(myShell.getCurrentDirectory().getParentFile());
         }
-    }
-
-    private ArrayList<File> getFolderContents(MyShell myShell) {
-        ArrayList<File> files = new ArrayList<>();
-        File[] filesArray = null;
-
-        try {
-            filesArray = myShell.getCurrentDirectory().listFiles();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        if(filesArray!=null) {
-            files = new ArrayList<>(Arrays.asList(filesArray));
-        }
-        return files;
     }
 }

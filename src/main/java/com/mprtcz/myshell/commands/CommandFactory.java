@@ -12,23 +12,31 @@ public class CommandFactory {
     private static final String EXIT = "exit";
     private static final String TREE = "tree";
 
-    private CommandFactory() {}
+    private CommandFactory() {
+    }
 
     public static Command getCommand(Arguments arguments) {
-        Command command = null;
+        Command command;
 
-        if (arguments.getCommand().equals(CD)) {
-            command = new Cd(arguments.getParameter());
-        } else if (arguments.getCommand().equals(PROMPT)) {
-            command = new Prompt(arguments.getParameter());
-        } else if (arguments.getCommand().equals(DIR)) {
-            command = new Dir();
-        } else if (arguments.getCommand().equals(EXIT)) {
-            command = new Exit();
-        } else if (arguments.getCommand().equals(TREE)) {
-            command = new Tree();
-        } else {
-            command = new UnknownCommand(arguments.getCommand());
+        switch (arguments.getCommand()) {
+            case CD:
+                command = new Cd(arguments.getParameter());
+                break;
+            case PROMPT:
+                command = new Prompt(arguments.getParameter());
+                break;
+            case DIR:
+                command = new Dir();
+                break;
+            case EXIT:
+                command = new Exit();
+                break;
+            case TREE:
+                command = new Tree();
+                break;
+            default:
+                command = new UnknownCommand(arguments.getCommand());
+                break;
         }
         return command;
     }
